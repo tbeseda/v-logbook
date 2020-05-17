@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<title>v-logbook demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./v-logbook.umd.js"></script>
+
+<link rel="stylesheet" href="./v-logbook.css">
+
+
+<div id="app">
+  <demo></demo>
+</div>
+
+<script>
+new Vue({
+  components: {
+    demo: v-logbook
+  }
+}).$mount('#app')
+</script>
