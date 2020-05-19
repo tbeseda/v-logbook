@@ -1,14 +1,21 @@
 <template>
-  <ul class="entries" ref="list" :style="customStyle">
+  <ul class="entries" ref="list" :style="[style, customStyle]">
     <li v-show="entries.length === 0">{{ standbyMessage }}</li>
-    <li v-for="(entry, index) in entries" :key="entry.id || index">
+    <li
+      v-for="(entry, index) in entries"
+      :key="entry.id || index"
+      style="margin: 0 0 10px; padding: 0px"
+    >
       <span v-if="timestamps"
         >[{{ entry.timestamp.toLocaleTimeString() }}]</span
       >
       &nbsp;
-      <span class="highlight" :class="entry.highlight">{{
-        entry.message
-      }}</span>
+      <span
+        class="highlight"
+        :class="entry.highlight"
+        :style="highlightStyle(entry.highlight)"
+        >{{ entry.message }}</span
+      >
     </li>
   </ul>
 </template>
@@ -40,6 +47,17 @@ export default {
   data() {
     return {
       entries: [],
+      style: {
+        margin: '0',
+        padding: '10px',
+        height: '250px',
+        background: '#1c1c1c',
+        color: '#aaa',
+        'overflow-y': 'scroll',
+        'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
+        'font-family': 'monospace',
+        'list-style': 'none',
+      },
     };
   },
 
@@ -66,6 +84,27 @@ export default {
         throw new Error('Log entry message is not valid');
     },
 
+    highlightStyle(type) {
+      let color;
+
+      switch (type) {
+        case 'good':
+          color = '#03dac5';
+          break;
+        case 'error':
+          color = '#cf6679';
+          break;
+        case 'neutral':
+          color = '#fff';
+          break;
+        default:
+          color = 'inherit';
+          break;
+      }
+
+      return `color: ${color}`;
+    },
+
     clear() {
       this.entries = [];
     },
@@ -84,33 +123,8 @@ export default {
 </script>
 
 <style scoped>
-.highlight.neutral {
-  color: #fff;
-}
-.highlight.good {
-  color: #03dac5;
-}
-.highlight.error {
-  color: #cf6679;
-}
-
-ul.entries {
-  height: 500px;
-  margin: 0;
-  padding: 10px;
-  overflow-y: scroll;
-  background: #1c1c1c;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  list-style: none;
-}
 ul.entries::-webkit-scrollbar {
   width: 0;
   background: transparent;
-}
-ul.entries li {
-  margin: 0 0 10px;
-  padding: 0;
-  font-family: monospace;
-  color: #aaa;
 }
 </style>
