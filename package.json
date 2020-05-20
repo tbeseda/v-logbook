@@ -1,6 +1,6 @@
 {
   "name": "v-logbook",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "A log viewer for custom entries. A logbook.",
   "author": {
     "name": "Taylor Beseda",
@@ -14,7 +14,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:npm": "vue-cli-service build --target lib --name v-logbook ./src/Logbook.vue"
+    "build:npm": "vue-cli-service build --target lib --name v-logbook ./src/components/Logbook.vue"
   },
   "main": "dist/v-logbook.umd.js",
   "unpkg": "dist/v-logbook.umd.min.js",

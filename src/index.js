@@ -1,4 +1,4 @@
-import Logbook from './Logbook.vue';
+import Logbook from './components/Logbook.vue';
 
 export { Logbook };
 

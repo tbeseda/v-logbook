@@ -12,8 +12,8 @@
       &nbsp;
       <span
         class="highlight"
-        :class="entry.highlight"
-        :style="highlightStyle(entry.highlight)"
+        :class="'highlight-' + entry.highlight"
+        :style="'color: ' + highlightColor[entry.highlight]"
         >{{ entry.message }}</span
       >
     </li>
@@ -33,14 +33,8 @@ export default {
       type: Boolean,
       default: true,
     },
-    preloadedLogs: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
     customStyle: {
-      type: String,
+      type: Object,
     },
   },
 
@@ -48,26 +42,39 @@ export default {
     return {
       entries: [],
       style: {
-        margin: '0',
         padding: '10px',
         height: '250px',
-        background: '#1c1c1c',
-        color: '#aaa',
         'overflow-y': 'scroll',
         'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
+        'text-align': 'left',
         'font-family': 'monospace',
         'list-style': 'none',
       },
     };
   },
 
+  computed: {
+    highlightColor() {
+      return {
+        neutral: '#fff',
+        info: '#209cee',
+        success: '#23d160',
+        warning: '#ffdd57',
+        danger: '#ff3860',
+      };
+    },
+  },
+
   methods: {
-    log(entry) {
+    add(entry) {
       if (typeof entry === 'string') entry = { message: entry };
 
       this.validateEntry(entry);
 
       this.entries.push({
+        // entry.id,
+        // entry.message,
+        // entry.highlight,
         ...entry,
         timestamp: new Date(),
       });
@@ -84,47 +91,9 @@ export default {
         throw new Error('Log entry message is not valid');
     },
 
-    highlightStyle(type) {
-      let color;
-
-      switch (type) {
-        case 'good':
-          color = '#03dac5';
-          break;
-        case 'error':
-          color = '#cf6679';
-          break;
-        case 'neutral':
-          color = '#fff';
-          break;
-        default:
-          color = 'inherit';
-          break;
-      }
-
-      return `color: ${color}`;
-    },
-
     clear() {
       this.entries = [];
     },
-
-    getEntries() {
-      return this.entries;
-    },
-  },
-
-  beforeMount() {
-    this.preloadedLogs.forEach(entry => {
-      this.log(entry);
-    });
   },
 };
 </script>
-
-<style scoped>
-ul.entries::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
-}
-</style>
