@@ -12,15 +12,15 @@
 ```vue
 <template>
   <Logbook
-      id="log"
-      ref="log"
-      standby-message="Just sitting on a log."
+      ref="myLogBook"
+      standby-message="Go for launch..."
       :custom-style="customStyle"
     />
 </template>
 
 <script>
 import Logbook from './';
+
 export default {
   name: 'App',
   components: {
@@ -52,7 +52,7 @@ export default {
   },
   mounted() {
     // for ease
-    this.$log = this.$refs.log;
+    this.$log = this.$refs.myLogbook;
   },
 };
 </script>
