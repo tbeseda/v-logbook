@@ -44,7 +44,7 @@ export default {
           highlight: 'danger',
         });
       // add a plain log entry
-      else this.$log.add('This is Odyssey. It's good to see you again');
+      else this.$log.add("This is Odyssey. It's good to see you again");
     },
     clear() {
       this.$log.clear();
